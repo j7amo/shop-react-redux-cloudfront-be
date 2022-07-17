@@ -20,7 +20,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "200 response"
+            "description": "Products received"
           }
         }
       }
