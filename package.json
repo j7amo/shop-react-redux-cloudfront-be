@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/j7amo/shop-react-redux-cloudfront-be#readme",
   "devDependencies": {
-    "@serverless/typescript": "^3.19.0"
+    "@serverless/typescript": "^3.19.0",
+    "serverless-auto-swagger": "^2.8.2",
+    "serverless-offline": "^8.8.1"
   }
 }
