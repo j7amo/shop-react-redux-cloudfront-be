@@ -46,7 +46,13 @@
         ],
         "responses": {
           "200": {
-            "description": "200 response"
+            "description": "Product found"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Product not found"
           }
         }
       }

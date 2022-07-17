@@ -8,7 +8,10 @@ export default {
         method: 'get',
         path: 'products',
         description: 'Returns all products',
-        cors: true
+        cors: true,
+        responseData: {
+          200: 'Products received',
+        }
       },
     },
   ],

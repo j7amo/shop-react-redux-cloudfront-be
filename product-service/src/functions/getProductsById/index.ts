@@ -9,12 +9,11 @@ export default {
         path: 'products/{productId}',
         description: 'Returns a product by ID',
         cors: true,
-        /*TODO: think of using request schema in other services*/
-        // request: {
-        //   schemas: {
-        //     'application/json': schema,
-        //   },
-        // },
+        responseData: {
+          200: 'Product found',
+          400: 'Bad request',
+          404: 'Product not found',
+        }
       },
     },
   ],
