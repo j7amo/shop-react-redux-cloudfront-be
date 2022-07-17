@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 import productList from "../../../mock/productList.json";
 import schema from './schema';
 import { AppError } from "@libs/AppError";
-import { isNumeric } from "../../utils/index";
+import { isNumeric } from "../../utils";
 
 const getProductsById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const { productId } = event.pathParameters;
