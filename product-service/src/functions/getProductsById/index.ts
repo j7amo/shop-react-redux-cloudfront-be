@@ -7,7 +7,8 @@ export default {
       http: {
         method: 'get',
         path: 'products/{productId}',
-        cors: true
+        description: 'Returns a product by ID',
+        cors: true,
         /*TODO: think of using request schema in other services*/
         // request: {
         //   schemas: {
