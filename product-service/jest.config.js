@@ -23,6 +23,13 @@ module.exports = {
     globals: {
         'ts-jest': {
             tsconfig: 'tsconfig.json',
+            babelConfig: {
+                env: {
+                    test: {
+                        plugins: ["dynamic-import-node"],
+                    }
+                }
+            }
         },
     },
 }

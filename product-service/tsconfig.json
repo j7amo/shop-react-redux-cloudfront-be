@@ -4,6 +4,7 @@
     "lib": ["ES2021"],
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "module": "ES2020",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
