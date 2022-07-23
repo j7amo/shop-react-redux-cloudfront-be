@@ -1,0 +1,32 @@
+{
+  "extends": "./tsconfig.paths.json",
+  "compilerOptions": {
+    "lib": ["ES2021"],
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "target": "ES2021",
+    "outDir": "lib"
+  },
+  "include": [
+    "src/**/*.ts",
+    "serverless.ts",
+    "../../../Library/Caches/JetBrains/WebStorm2021.3/javascript/typings/node/12.20.55/node_modules/@types/node/globals.d.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}
