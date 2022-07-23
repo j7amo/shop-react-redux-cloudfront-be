@@ -6,7 +6,13 @@ import getProductsById from '@functions/getProductsById';
 const serverlessConfiguration: AWS = {
   service: 'product-service',
   frameworkVersion: '3',
-  plugins: ['serverless-auto-swagger', 'serverless-esbuild', 'serverless-offline'],
+  useDotenv: true,
+  plugins: [
+    'serverless-dotenv-plugin',
+    'serverless-auto-swagger',
+    'serverless-esbuild',
+    'serverless-offline'
+  ],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -19,7 +25,6 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
   },
-  // import the function via paths
   functions: { getProductsList, getProductsById },
   package: { individually: true },
   custom: {
@@ -27,7 +32,7 @@ const serverlessConfiguration: AWS = {
       bundle: true,
       minify: true,
       sourcemap: true,
-      exclude: ['aws-sdk'],
+      exclude: ['aws-sdk', 'pg-native'],
       target: 'node14',
       define: { 'require.resolve': undefined },
       platform: 'node',
