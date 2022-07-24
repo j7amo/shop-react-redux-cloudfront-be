@@ -11,8 +11,8 @@ export default {
         cors: true,
         responseData: {
           200: 'Product found',
-          400: 'Bad request',
           404: 'Product not found',
+          500: 'Internal server error'
         }
       },
     },
