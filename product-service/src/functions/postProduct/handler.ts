@@ -24,7 +24,7 @@ const postProduct: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (ev
     throw new AppError('Product data is invalid', 400);
   }
 
-  if (!isNumeric(String(price)) || !isNumeric(String(count))) {
+  if (!isNumeric(String(price)) || !isNumeric(String(count)) || price <= 0 || count <= 0) {
     throw new AppError('Product data is invalid', 400);
   }
 
