@@ -12,9 +12,10 @@ const dbOptions = setupDbOptions();
 const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
   const client = new Client(dbOptions);
   await client.connect();
+  const query = `select id, title, description, price, counts from (select * from products P join stocks S on P.id = S.product_id) X`
 
   try {
-    const { rows: productList } = await client.query(`select * from products`);
+    const { rows: productList } = await client.query(query);
 
     return {
       productsList: productList
