@@ -7,5 +7,5 @@ import { apiGatewayResponseMiddleware } from "@libs/middleware";
 export const middyfy = (handler: Handler) => {
   return middy(handler)
       .use(middyJsonBodyParser())
-      .use(apiGatewayResponseMiddleware({ enableErrorLogger: process.env.IS_OFFLINE === 'true' }));
+      .use(apiGatewayResponseMiddleware({ enableErrorLogger: true }));
 }
