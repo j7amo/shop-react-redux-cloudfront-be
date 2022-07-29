@@ -1,7 +1,9 @@
 import type { AWS } from '@serverless/typescript';
 
+import importProductsFile from '@functions/importProductsFile';
+
 const serverlessConfiguration: AWS = {
-  service: 'product-service',
+  service: 'import-service',
   frameworkVersion: '3',
   useDotenv: true,
   plugins: [
@@ -21,8 +23,15 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: ['s3:*'],
+        Resource: ['arn:aws:s3:::roman-tarnakin-import-bucket/*'],
+      },
+    ],
   },
-  functions: { },
+  functions: { importProductsFile },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -36,6 +45,7 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
     autoswagger: {
+      apiType: 'http',
       title: 'Products',
       host: 'lz37ta80t6.execute-api.us-east-1.amazonaws.com/dev/',
       schemes: ['https'],

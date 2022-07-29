@@ -5,31 +5,31 @@ import { middyfy } from '@libs/lambda';
 import schema from './schema';
 import { AppError } from '@libs/AppError';
 
+const BUCKET = 'roman-tarnakin-import-bucket';
+
 const importProductsFile: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const s3 = new AWS.S3({ region: 'us-east-1' });
-  // s3.listObjectsV2()
   console.log(event);
-  const { name } = event.queryStringParameters;
+  const { name: fileName } = event.queryStringParameters;
+  const s3 = new AWS.S3({ region: 'us-east-1' });
 
-  // let productList;
-  //
-  // try {
-  //   productList = (await client.query(query)).rows;
-  // } catch(err) {
-  //   throw new AppError(err.message, 500);
-  // } finally {
-  //   client.end();
-  // }
+  const params = {
+    Bucket: BUCKET,
+    Key: `uploaded/${fileName}`,
+    Expires: 60,
+    ContentType: 'text/csv',
+  }
 
-  // const product = productList.find(({ id }) => id === productId);
-  //
-  // if (!product) {
-  //   throw new AppError('Product not found', 404);
-  // }
-  //
-  // return {
-  //   product
-  // };
+  let signedURL: string;
+
+  try {
+    signedURL = await s3.getSignedUrlPromise('putObject', params);
+  } catch (err) {
+    throw new AppError('Could not get signed URL', 400);
+  }
+
+    return {
+      url: signedURL,
+    };
 };
 
 export const main = middyfy(importProductsFile);

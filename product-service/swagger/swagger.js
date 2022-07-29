@@ -68,7 +68,7 @@
       "get": {
         "summary": "getProductsById",
         "description": "Returns a product by ID",
-        "operationId": "importProductsFile.get.products/{productId}",
+        "operationId": "getProductsById.get.products/{productId}",
         "consumes": [
           "application/json"
         ],

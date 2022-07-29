@@ -7,12 +7,19 @@ export default {
       http: {
         method: 'get',
         path: '/import',
-        description: 'Imports a product from CSV file',
+        request: {
+          parameters: {
+            querystrings: {
+              name: true
+            }
+          }
+        },
+        description: 'Returns a Signed URL for CSV file to import',
         cors: true,
         responseData: {
-          // 200: 'Product found',
-          // 404: 'Product not found',
-          // 500: 'Internal server error'
+          200: 'Signed URL successfully generated',
+          400: 'Could not get signed URL',
+          500: 'Internal server error'
         }
       },
     },
