@@ -1,3 +1,4 @@
+import AWS from 'aws-sdk';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
@@ -5,6 +6,8 @@ import schema from './schema';
 import { AppError } from '@libs/AppError';
 
 const importProductsFile: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+  const s3 = new AWS.S3({ region: 'us-east-1' });
+  // s3.listObjectsV2()
   console.log(event);
   const { name } = event.queryStringParameters;
 
