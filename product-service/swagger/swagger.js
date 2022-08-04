@@ -21,6 +21,45 @@
         "responses": {
           "200": {
             "description": "Products received"
+          },
+          "404": {
+            "description": "Products not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "postProduct",
+        "description": "Creates a new product",
+        "operationId": "postProduct.post.products",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Body required in the request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductCreationRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product created"
+          },
+          "400": {
+            "description": "Product data is invalid"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -48,17 +87,47 @@
           "200": {
             "description": "Product found"
           },
-          "400": {
-            "description": "Bad request"
-          },
           "404": {
             "description": "Product not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
     }
   },
-  "definitions": {},
+  "definitions": {
+    "ProductCreationRequestBody": {
+      "properties": {
+        "title": {
+          "title": "ProductCreationRequestBody.title",
+          "type": "string"
+        },
+        "description": {
+          "title": "ProductCreationRequestBody.description",
+          "type": "string"
+        },
+        "price": {
+          "title": "ProductCreationRequestBody.price",
+          "type": "number"
+        },
+        "count": {
+          "title": "ProductCreationRequestBody.count",
+          "type": "number"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "price",
+        "count"
+      ],
+      "additionalProperties": false,
+      "title": "ProductCreationRequestBody",
+      "type": "object"
+    }
+  },
   "securityDefinitions": {},
   "host": "lz37ta80t6.execute-api.us-east-1.amazonaws.com/dev/",
   "schemes": [
