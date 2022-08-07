@@ -1,5 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
+import catalogBatchProcess from '@functions/catalogBatchProcess';
 import getProductsList from '@functions/getProductsList';
 import getProductsById from '@functions/getProductsById';
 import postProduct from '@functions/postProduct';
@@ -26,7 +27,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
   },
-  functions: { getProductsList, getProductsById, postProduct },
+  functions: { getProductsList, getProductsById, postProduct, catalogBatchProcess },
   package: { individually: true },
   custom: {
     esbuild: {
