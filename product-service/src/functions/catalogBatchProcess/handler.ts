@@ -1,3 +1,4 @@
+import AWS from 'aws-sdk';
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 import * as pg from 'pg';
@@ -12,6 +13,7 @@ const dbOptions = setupDbOptions();
 const catalogBatchProcess: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const client = new Client(dbOptions);
   await client.connect();
+  const sns = new AWS.SNS();
   // @ts-ignore
   const items = event.Records.map(({ body }) => JSON.parse(body));
   for (const item of items) {
@@ -35,8 +37,13 @@ const catalogBatchProcess: ValidatedEventAPIGatewayProxyEvent<typeof schema> = a
 
     try {
       await client.query(productCreationQuery);
+      await sns.publish({
+        Subject: 'Product successfully created!',
+        Message: `Product: ${JSON.stringify(item)}`,
+        TopicArn: process.env.SNS_ARN,
+      }).promise();
       return {
-        message: "Product successfully created"
+        message: 'Product successfully created'
       }
     } catch(err) {
       throw new AppError(err.message, 500);

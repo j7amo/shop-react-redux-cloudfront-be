@@ -25,7 +25,33 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SNS_ARN: { Ref: 'CreateProductTopic' },
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: ['sns:*'],
+        Resource: { Ref: 'CreateProductTopic' },
+      }
+    ],
+  },
+  resources: {
+    Resources: {
+      CreateProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'create-product-topic',
+        }
+      },
+      CreateProductTopicSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'roman.tarnakin@gmail.com',
+          Protocol: 'email',
+          TopicArn: { Ref: 'CreateProductTopic' },
+        }
+      }
+    }
   },
   functions: { getProductsList, getProductsById, postProduct, catalogBatchProcess },
   package: { individually: true },
