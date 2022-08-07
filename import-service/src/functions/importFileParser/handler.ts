@@ -47,7 +47,7 @@ const importFileParser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = asyn
 
     await Promise.all(results.map(async (result) => {
       const sendMessageParams = {
-        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/522943678476/import-service-queue',
+        QueueUrl: process.env.SQS_URL,
         MessageBody: JSON.stringify(result)
       };
 
