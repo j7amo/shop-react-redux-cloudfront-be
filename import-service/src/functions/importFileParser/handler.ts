@@ -10,6 +10,7 @@ const BUCKET = 'roman-tarnakin-import-bucket';
 
 const importFileParser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
   const s3 = new AWS.S3({ region: 'us-east-1' });
+  const sqs = new AWS.SQS();
 
   const paramsForBucketListing = {
     Bucket: BUCKET,
@@ -35,6 +36,8 @@ const importFileParser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = asyn
           })
           .on('error', (error) => {
             reject(error);
+            console.log('Something went wrong:');
+            console.log(error);
           })
           .on('end', () => {
             console.log('Parsing completed!');
@@ -42,9 +45,17 @@ const importFileParser: ValidatedEventAPIGatewayProxyEvent<typeof schema> = asyn
           })
     });
 
-    results.forEach((item) => {
-      console.log(item);
-    });
+    await Promise.all(results.map(async (result) => {
+      const sendMessageParams = {
+        QueueUrl: 'https://sqs.us-east-1.amazonaws.com/522943678476/import-service-queue',
+        MessageBody: JSON.stringify(result)
+      };
+
+      await sqs.sendMessage(sendMessageParams).promise().catch(err => {
+        console.log('ERROR');
+        console.log(err);
+      });
+    }));
 
     return {
       message: 'CSV successfully parsed'
