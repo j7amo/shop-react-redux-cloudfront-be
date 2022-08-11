@@ -14,6 +14,8 @@ const serverlessConfiguration: AWS = {
   ],
   provider: {
     name: 'aws',
+    stage: 'dev',
+    region: 'us-east-1',
     runtime: 'nodejs14.x',
     apiGateway: {
       minimumCompressionSize: 1024,
@@ -24,16 +26,6 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
   },
-  // resources: {
-  //   Resources: {
-  //     ImportServiceQueue: {
-  //       Type: 'AWS::SQS::Queue',
-  //       Properties: {
-  //         QueueName: 'import-service-queue',
-  //       }
-  //     }
-  //   }
-  // },
   functions: { basicAuthorizer },
   package: { individually: true },
   custom: {
