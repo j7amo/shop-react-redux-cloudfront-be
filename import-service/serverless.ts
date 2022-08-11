@@ -23,6 +23,8 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      SQS_URL: 'https://sqs.us-east-1.amazonaws.com/522943678476/import-service-queue',
+      SQS_NAME: 'import-service-queue',
     },
     iamRoleStatements: [
       {
@@ -30,7 +32,24 @@ const serverlessConfiguration: AWS = {
         Action: ['s3:*'],
         Resource: ['arn:aws:s3:::roman-tarnakin-import-bucket/*'],
       },
+      {
+        Effect: 'Allow',
+        Action: ['sqs:*'],
+        Resource: {
+          'Fn::GetAtt': ['ImportServiceQueue', 'Arn'],
+        },
+      }
     ],
+  },
+  resources: {
+    Resources: {
+      ImportServiceQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'import-service-queue',
+        }
+      }
+    }
   },
   functions: { importProductsFile, importFileParser },
   package: { individually: true },
