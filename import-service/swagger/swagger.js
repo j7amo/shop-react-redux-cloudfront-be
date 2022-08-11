@@ -10,7 +10,7 @@
       "get": {
         "summary": "importProductsFile",
         "description": "Returns a Signed URL for CSV file to import",
-        "operationId": "importProductsFile.get./import",
+        "operationId": "basicAuthorizer.get./import",
         "consumes": [
           "application/json"
         ],
