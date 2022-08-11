@@ -27,7 +27,7 @@ const basicAuthorizer: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
 
     return generatePolicy(encodedCredentials, event.methodArn, effect);
   } catch (err) {
-    throw new AppError('Unauthorized', 401);
+    throw new AppError('Forbidden', 403);
   }
 };
 
