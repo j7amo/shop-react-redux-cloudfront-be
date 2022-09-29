@@ -14,6 +14,13 @@ export default {
             }
           }
         },
+        authorizer: {
+          name: 'tokenAuthorizer',
+          arn: 'arn:aws:lambda:${self:provider.region}:${env:ACCOUNT_ID}:function:authorization-service-dev-basicAuthorizer',
+          identitySource: 'method.request.header.Authorization',
+          resultTtlInSeconds: 0,
+          type: 'token',
+        },
         description: 'Returns a Signed URL for CSV file to import',
         cors: true,
         responseData: {
